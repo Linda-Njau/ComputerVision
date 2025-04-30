@@ -40,3 +40,16 @@ def plot_convolution(t,data_train,title=''):
         ax[1,5].axis('off')
         #plt.tight_layout()
         plt.show()
+
+def train(net,train_loader,test_loader,optimizer=None, lr=0.01,epochs=20,loss_fn=nn.NLLLoss()):
+    optimizer = optimizer or torch.optim.Adam(net.parameters(), lr=lr)
+    res = {'train_loss' : [], 'train_acc': [], 'val_loss': [], 'val_acc': []}
+    for ep in range(epochs):
+        tl,ta = train_epoch(net,train_loader,optimizer=optimizer, lr=lr, loss_fn=loss_fn)
+        vl,va = validate(net,test_loader,loss_fn=loss_fn)
+        print(f"Epoch {ep:2}, Train acc={ta:.3f}, Val acc={va:.3f}, Train loss={tl:.3f}, Val loss={vl:.3f}")
+        res['train_loss'].append(tl)
+        res['train_acc'].append(ta)
+        res['val_loss'].append(vl)
+        res['val_acc'].append(va)
+    return res
