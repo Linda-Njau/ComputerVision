@@ -95,3 +95,13 @@ def plot_results(hist):
     plt.plot(hist['train_loss'], label='Training loss')
     plt.plot(hist['val_loss'], label='Validation loss')
     plt.legend()
+
+def display_dataset(dataset, n=10, classes=None):
+    fig, ax = plt.subplots(1,n,figsize=(15,3))
+    mn = min([dataset[i][0].min()for i in range(n)])
+    mx = max([dataset[i][0].max() for i in range(n)])
+    for i in range(n):
+        ax[i].imshow(np.transpose((dataset[i][0]-mn)/(mx-mn),(1,2,0)))
+        ax[i].axis('off')
+        if classes:
+            ax[i].set_title(classes[dataset[i][1]])
