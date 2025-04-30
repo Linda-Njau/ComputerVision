@@ -54,7 +54,7 @@ def validate(net, dataloader,loss_fn=nn.NLLLoss()):
             count += len(labels)
         return loss.item()/count, acc.item()/count
 
-def train_epoch(net,dataloader, lr=0.01,optimizer=None,loss_fn = nn.LLLoss()):
+def train_epoch(net,dataloader, lr=0.01,optimizer=None,loss_fn = nn.NLLLoss()):
     optimizer = optimizer or torch.optim.Adam(net.parameters(), lr=lr)
     net.train()
     total_loss,acc,count = 0,0,0
