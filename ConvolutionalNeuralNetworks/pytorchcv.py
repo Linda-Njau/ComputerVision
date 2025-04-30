@@ -41,6 +41,24 @@ def plot_convolution(t,data_train,title=''):
         #plt.tight_layout()
         plt.show()
 
+def train_epoch(net,dataloader, lr=0.01,optimizer=None,loss_fn = nn.LLLoss()):
+    optimizer = optimizer or torch.optim.Adam(net.parameters(), lr=lr)
+    net.train()
+    total_loss,acc,count = 0,0,0
+    for features,labels in dataloader:
+        optimizer.zero_grad()
+        lbls = labels.to(default_device)
+        out = net(features.to(default_device))
+        loss = loss_fn(out,lbls)
+        loss.backward()
+        optimizer.step()
+        total_loss+=loss
+        _,predicted = torch.max(out,1)
+        acc+=(predicted==lbls).sum()
+        count+=len(labels)
+    return total_loss.item()/count, acc.item()/count
+
+
 def train(net,train_loader,test_loader,optimizer=None, lr=0.01,epochs=20,loss_fn=nn.NLLLoss()):
     optimizer = optimizer or torch.optim.Adam(net.parameters(), lr=lr)
     res = {'train_loss' : [], 'train_acc': [], 'val_loss': [], 'val_acc': []}
