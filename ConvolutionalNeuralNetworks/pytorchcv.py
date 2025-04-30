@@ -84,3 +84,14 @@ def train(net,train_loader,test_loader,optimizer=None, lr=0.01,epochs=20,loss_fn
         res['val_loss'].append(vl)
         res['val_acc'].append(va)
     return res
+
+def plot_results(hist):
+    plt.figure(figsize=(15,5))
+    plt.subplot(121)
+    plt.plot(hist['train_acc'], label='Training acc')
+    plt.plot(hist['val_acc'], label='Validation acc')
+    plt.legend()
+    plt.subplot(122)
+    plt.plot(hist['train_loss'], label='Training loss')
+    plt.plot(hist['val_loss'], label='Validation loss')
+    plt.legend()
