@@ -22,3 +22,13 @@ def plot_convolution(data,t,title=''):
     ax[1,-1].axis('off')
     
     plt.show()
+
+def plot_results(hist):
+    fig,ax = plt.subplots(1,2,figsize=(15,3))
+    ax[0].set_title('Accuracy')
+    ax[1].set_title('Loss')
+    for x in ['acc', 'val_acc']:
+        ax[0].plot(hist.history[x])
+    for x in ['loss','val_loss']:
+        ax[1].plot(hist.history[x])
+    plt.show()    
