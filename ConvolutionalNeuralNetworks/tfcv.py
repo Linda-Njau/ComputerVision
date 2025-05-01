@@ -32,3 +32,11 @@ def plot_results(hist):
     for x in ['loss','val_loss']:
         ax[1].plot(hist.history[x])
     plt.show()    
+
+def display_dataset(dataset, labels=None, n=10, classes=10):
+    fig,ax = plt.subplots(1,n,figsize=(15,3))
+    for i in range(n):
+        ax[i].imshow(dataset[i])
+        ax[i].axis('off')
+        if classes is not None and labels is not None:
+            ax[i].set_title(classes[labels[i][0]])
