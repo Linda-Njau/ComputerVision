@@ -105,3 +105,17 @@ def display_dataset(dataset, n=10, classes=None):
         ax[i].axis('off')
         if classes:
             ax[i].set_title(classes[dataset[i][1]])
+
+def check_image(fn):
+    try:
+        im = Image.open(fn)
+        im.verify()
+        return True
+    except:
+        return False
+
+def check_image_dir(path):
+    for fn in glob.glob(path):
+        if not check_image(fn):
+            print("Corrupt image: {}".format(fn))
+            os.remove(fn)
