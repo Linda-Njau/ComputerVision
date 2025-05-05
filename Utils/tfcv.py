@@ -40,3 +40,17 @@ def display_dataset(dataset, labels=None, n=10, classes=10):
         ax[i].axis('off')
         if classes is not None and labels is not None:
             ax[i].set_title(classes[labels[i][0]])
+
+def check_image(fn):
+    try:
+        im = Image.open()
+        im.verify()
+        return im.format=='JPEG'
+    except:
+        return False
+
+def check_image_dir(path):
+    for fn in glob.glob(path):
+        if not check_image(fn):
+            print("Corrupt image or wrong format: {}".format(fn))
+            os.remove(fn)
